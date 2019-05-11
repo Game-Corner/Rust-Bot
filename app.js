@@ -44,7 +44,7 @@ client.on('message', msg => {
   }
   else if (msg.content === 'r!create') {
     var atr = msg.author
-    register(atr.username, atr.id);
+    register(atr.username.toString(), atr.id);
     msg.reply('Your user has been created!')
   }
 });
