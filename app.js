@@ -2,6 +2,20 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const http = require('http');
 const port = process.env.PORT;
+const { Client } = require('pg')
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+
+client.connect();
+
+function register(first, id) {
+  var text = `INSERT INTO Users (FirstName, discord_id) VALUES (${first}, ${id});`;
+  client.query(text, (err, res) => {
+    console.log(res);
+  });
+}
 
 const requestHandler = (request, response) => {
   console.log(request.url);
@@ -24,6 +38,11 @@ client.on('ready', () => {
 client.on('message', msg => {
   if (msg.content === 'r!') {
     msg.reply('yay')
+  }
+  else if (msg.content === 'r!create') {
+    var atr = msg.author
+    register(atr.username, atr.id);
+    msg.reply('Your user has been created!')
   }
 });
 
