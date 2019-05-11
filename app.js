@@ -8,7 +8,7 @@ const pg = new Client({
   ssl: true,
 });
 
-client.connect();
+pg.connect();
 
 function register(first, id) {
   var text = `INSERT INTO Users (FirstName, discord_id) VALUES (${first}, ${id});`;
