@@ -44,8 +44,22 @@ client.on('message', msg => {
   }
   else if (msg.content === 'r!create') {
     var atr = msg.author
-    register(atr.username, atr.id);
-    msg.reply('Your user has been created!')
+    var ok = function discord_check(id) {
+      var text = `select exists(select 1 from Users where discord_id = ${id})`;
+      var result = pg.query(text, (err, res) => {
+        console.log(res);
+        console.log(err);
+        return res
+      });
+      return result
+    }
+    if (ok == 'true') {
+      msg.reply('You\'re already registered!')
+    }
+    else {
+      register(atr.username, atr.id);
+      msg.reply('Your user has been created!')
+    }
   }
 });
 
