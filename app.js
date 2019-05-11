@@ -15,8 +15,11 @@ function register(first, id) {
   console.log(id)
   var text = `INSERT INTO Users (FirstName, discord_id) VALUES ('${first}', ${id});`;
   pg.query(text, (err, res) => {
-    console.log(res);
-    console.log(err);
+    if (err) {
+      console.log(err.stack)
+    } else {
+      console.log(res.rows[0])
+    }
   });
 }
 
@@ -24,9 +27,12 @@ function discord_check(id) {
   var text = `select exists(select 1 from Users where discord_id = ${id})`;
   var result = {}
   pg.query(text, (err, res) => {
-    console.log(res);
-    console.log(err);
-    result = res
+    if (err) {
+      console.log(err.stack)
+    } else {
+      console.log(res.rows[0])
+      result = res.rows[0]
+    }
   });
   return result
 }
@@ -55,8 +61,8 @@ client.on('message', msg => {
   }
   else if (msg.content === 'r!create') {
     var atr = msg.author
-    console.log(discord_check(atr.id))
-    if (discord_check(atr.id)) {
+    console.log(discord_check(atr.id).exists)
+    if (discord_check(atr.id).exists == 'true') {
       msg.reply('You\'re already registered!')
     }
     else {
