@@ -44,8 +44,8 @@ client.on('message', msg => {
   }
   else if (msg.content === 'r!create') {
     var atr = msg.author
-    var ok = function discord_check(id) {
-      var text = `select exists(select 1 from Users where discord_id = ${id})`;
+    var ok = function discord_check() {
+      var text = `select exists(select 1 from Users where discord_id = ${atr.id})`;
       var result = pg.query(text, (err, res) => {
         console.log(res);
         console.log(err);
