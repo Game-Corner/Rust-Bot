@@ -24,7 +24,7 @@ function discord_check(id) {
   var text = `select exists(select 1 from Users where discord_id = ${id})`;
   var result = {}
   pg.query(text, (err, res) => {
-    consdole.log(res);
+    console.log(res);
     console.log(err);
     result = res
   });
