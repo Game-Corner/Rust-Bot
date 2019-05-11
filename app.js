@@ -13,7 +13,7 @@ pg.connect();
 function register(first, id) {
   console.log(first)
   console.log(id)
-  var text = `INSERT INTO Users (FirstName, discord_id) VALUES (${first}, ${id});`;
+  var text = `INSERT INTO Users (FirstName, discord_id) VALUES ('${first}', ${id});`;
   pg.query(text, (err, res) => {
     console.log(res);
     console.log(err);
@@ -44,7 +44,7 @@ client.on('message', msg => {
   }
   else if (msg.content === 'r!create') {
     var atr = msg.author
-    register(atr.username.toString(), atr.id);
+    register(atr.username, atr.id);
     msg.reply('Your user has been created!')
   }
 });
