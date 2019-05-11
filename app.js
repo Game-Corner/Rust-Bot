@@ -11,7 +11,9 @@ const pg = new Client({
 pg.connect();
 
 function register(first, id) {
-  var text = `INSERT INTO Users (FirstName, discord_id) VALUES ('y', 0);`;
+  console.log(first)
+  console.log(id)
+  var text = `INSERT INTO Users (FirstName, discord_id) VALUES (${first}, ${id});`;
   pg.query(text, (err, res) => {
     console.log(res);
     console.log(err);
