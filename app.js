@@ -20,6 +20,17 @@ function register(first, id) {
   });
 }
 
+function discord_check(id) {
+  var text = `select exists(select 1 from Users where discord_id = ${id})`;
+  var result = {}
+  pgs.query(text, (err, res) => {
+    consdole.log(res);
+    console.log(err);
+    result = res
+  });
+  return result
+}
+
 const requestHandler = (request, response) => {
   console.log(request.url);
   response.end('server requested');
@@ -44,16 +55,8 @@ client.on('message', msg => {
   }
   else if (msg.content === 'r!create') {
     var atr = msg.author
-    var ok = function discord_check() {
-      var text = `select exists(select 1 from Users where discord_id = ${atr.id})`;
-      var result = pg.query(text, (err, res) => {
-        console.log(res);
-        console.log(err);
-        return res
-      });
-      return result
-    }
-    if (ok == 'true') {
+    console.log(discord_check(atr.id))
+    if (discord_check(atr.id)) {
       msg.reply('You\'re already registered!')
     }
     else {
