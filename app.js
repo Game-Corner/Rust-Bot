@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const http = require('http');
 const port = process.env.PORT;
 const { Client } = require('pg')
-const client = new Client({
+const pg = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: true,
 });
@@ -12,7 +12,7 @@ client.connect();
 
 function register(first, id) {
   var text = `INSERT INTO Users (FirstName, discord_id) VALUES (${first}, ${id});`;
-  client.query(text, (err, res) => {
+  pg.query(text, (err, res) => {
     console.log(res);
   });
 }
