@@ -11,8 +11,6 @@ const pg = new Client({
 pg.connect();
 
 function register(first, id) {
-  console.log(first)
-  console.log(id)
   var text = `INSERT INTO Users (FirstName, discord_id) VALUES ('${first}', ${id});`;
   pg.query(text, (err, res) => {
     if (err) {
@@ -29,7 +27,6 @@ async function discord_create(msg) {
       return res.rows[0].exists;
     })
     .catch(e => console.error(e.stack))
-  console.log(result)
   if (result === true) {
     msg.reply('You\'re already registered!')
   }
