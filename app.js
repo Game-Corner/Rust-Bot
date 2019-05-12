@@ -17,9 +17,6 @@ function register(first, id) {
   pg.query(text, (err, res) => {
     if (err) {
       console.log(err.stack)
-    } 
-    else {
-      console.log(res.rows[0])
     }
   });
 }
@@ -34,9 +31,9 @@ function discord_check(id) {
     else {
       console.log(res)
       result = res.rows[0].exists;
-      console.log(result)
     }
   });
+  console.log(result)
   return result
 }
 
