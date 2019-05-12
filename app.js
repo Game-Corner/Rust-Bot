@@ -34,7 +34,7 @@ function discord_check(id) {
     else {
       console.log(res)
       result = res.rows[0].exists;
-      console.log(typeof result)
+      console.log(result)
     }
   });
   return result
@@ -64,7 +64,7 @@ client.on('message', msg => {
   }
   else if (msg.content === 'r!create') {
     var atr = msg.author
-    if (discord_check(atr.id) === 'true') {
+    if (discord_check(atr.id) === true) {
       msg.reply('You\'re already registered!')
     }
     else {
