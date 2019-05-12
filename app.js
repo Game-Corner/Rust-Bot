@@ -33,8 +33,8 @@ function discord_check(id) {
     } 
     else {
       console.log(res)
-      result = res.rows[0].exists.toString();
-      console.log(result)
+      result = res.rows[0].exists;
+      console.log(typeof result)
     }
   });
   return result
