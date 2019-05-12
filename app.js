@@ -23,7 +23,7 @@ function register(first, id) {
 
 async function discord_check(id) {
   var text = `select exists(select 1 from Users where discord_id = ${id})`;
-  var result = await pgs.query(text)
+  var result = await pg.query(text)
     .then(res => {
       return res.rows[0].exists;
     })
