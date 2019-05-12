@@ -21,18 +21,13 @@ function register(first, id) {
   });
 }
 
-function discord_check(id) {
+async function discord_check(id) {
   var text = `select exists(select 1 from Users where discord_id = ${id})`;
-  var result = {}
-  pg.query(text, (err, res) => {
-    if (err) {
-      console.log(err.stack)
-    } 
-    else {
-      console.log(res)
-      result = res.rows[0].exists;
-    }
-  });
+  var result = await pgs.query(text)
+    .then(res => {
+      return res.rows[0].exists;
+    })
+    .catch(e => console.error(e.stack))
   console.log(result)
   return result
 }
