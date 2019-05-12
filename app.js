@@ -56,6 +56,7 @@ client.on('message', msg => {
   }
   else if (msg.content === 'r!create') {
     var atr = msg.author
+    console.log(discord_check(atr.id))
     if (discord_check(atr.id) === true) {
       msg.reply('You\'re already registered!')
     }
