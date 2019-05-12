@@ -21,15 +21,22 @@ function register(first, id) {
   });
 }
 
-async function discord_check(id) {
-  var text = `select exists(select 1 from Users where discord_id = ${id})`;
+async function discord_create(msg) {
+  var atr = msg.author;
+  var text = `select exists(select 1 from Users where discord_id = ${atr.id})`;
   var result = await pg.query(text)
     .then(res => {
       return res.rows[0].exists;
     })
     .catch(e => console.error(e.stack))
   console.log(result)
-  return result
+  if (result === true) {
+    msg.reply('You\'re already registered!')
+  }
+  else {
+    register(atr.username, atr.id);
+    msg.reply('Your user has been created!')
+  }
 }
 
 const requestHandler = (request, response) => {
@@ -55,15 +62,7 @@ client.on('message', msg => {
     msg.reply('yay')
   }
   else if (msg.content === 'r!create') {
-    var atr = msg.author
-    console.log(discord_check(atr.id))
-    if (discord_check(atr.id) === true) {
-      msg.reply('You\'re already registered!')
-    }
-    else {
-      register(atr.username, atr.id);
-      msg.reply('Your user has been created!')
-    }
+    discord_create(msg)
   }
 });
 
